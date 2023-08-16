@@ -1,12 +1,13 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { collection, getDocs } from 'firebase/firestore/lite';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import database from "../../config/firebaseconfig";
+import ProductContext from '../../context/ProductContext';
 import styles from './style';
 
 export default function Products({navigation}) {
-  const [products, setProducts] = useState([]);
+  const {products, setProducts} = useContext(ProductContext);
 
   const addToCart = (item) => {
     console.log(item);
