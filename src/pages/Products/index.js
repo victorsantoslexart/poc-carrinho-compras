@@ -8,10 +8,25 @@ import styles from './style';
 
 export default function Products({navigation}) {
   const {products, setProducts} = useContext(ProductContext);
+  const {shopCart, setShopCart} = useContext(ProductContext);
 
   const addToCart = (item) => {
-    console.log(item);
+    const newShopCart = [...shopCart];
+    
+    const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid)
+
+    if (uidIndex !== -1) {
+      newShopCart.splice(uidIndex, 1);
+    } else {
+      newShopCart.push(item);
+    }
+
+    setShopCart(newShopCart)
   }
+
+  useEffect(() => {
+    console.log(shopCart);
+  }, [shopCart])
 
   useEffect(() => {
     async function fetchData() {
@@ -52,6 +67,23 @@ export default function Products({navigation}) {
               >
                 {item.name}
               </Text>
+              <Text
+                style={styles.categoryText}
+              >
+                {item.category}
+              </Text>
+              <View>
+                <Text
+                  style={styles.priceText}
+                >
+                  {item.price}
+                </Text>
+                <Text
+                  style={styles.currencyText}
+                >
+                  {item.currency}
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           )
