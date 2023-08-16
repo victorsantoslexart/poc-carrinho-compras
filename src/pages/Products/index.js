@@ -14,11 +14,12 @@ export default function Products({navigation}) {
     const newShopCart = [...shopCart];
     
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid)
+    const filteredCart = shopCart.find((nItem) => nItem.uid === item.uid)
 
     if (uidIndex !== -1) {
-      newShopCart.splice(uidIndex, 1);
+      newShopCart.splice(uidIndex, 1, {...item, quantity: filteredCart.quantity + 1});
     } else {
-      newShopCart.push(item);
+      newShopCart.push({...item, quantity: 1});
     }
 
     setShopCart(newShopCart)
