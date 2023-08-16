@@ -4,7 +4,7 @@ import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import ProductContext from "../../context/ProductContext";
 import styles from "./style";
 
-export default function ShoppingCart() {
+export default function ShoppingCart({navigation}) {
   const {shopCart, setShopCart} = useContext(ProductContext);
 
   const removeShopCart = (item) => {
@@ -16,6 +16,13 @@ export default function ShoppingCart() {
   if (shopCart.length > 0) {
     return(
       <View style={styles.shopCart}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Products")}
+        >
+          <Text style={styles.iconButton}>
+            PRODUCTS
+          </Text>
+        </TouchableOpacity>
         <FlatList 
           showsVerticalScrollIndicator={false}
           data={shopCart}
@@ -61,15 +68,24 @@ export default function ShoppingCart() {
         <TouchableOpacity
           onPress={() => navigation.navigate("Checkout")}
         >
-          <Text style={styles.iconButton}>
-            +
-          </Text>
+          <FontAwesome
+            name='paypal'
+            size={23}
+            color="#F92E6A"
+          />
         </TouchableOpacity>
       </View>
     )
   } else {
     return (
       <View style={styles.shopCart}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Products")}
+        >
+          <Text style={styles.iconButton}>
+            PRODUCTS
+          </Text>
+        </TouchableOpacity>
         <Text>
           The shopping cart is empty!
         </Text>

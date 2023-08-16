@@ -93,7 +93,11 @@ export default function Products({navigation}) {
         onPress={() => navigation.navigate("Shopping Cart")}
       >
         <Text style={styles.iconButton}>
-          +
+          <FontAwesome
+            name='shopping-cart'
+            size={23}
+            color="#F92E6A"
+          />
         </Text>
       </TouchableOpacity>
     </View>
