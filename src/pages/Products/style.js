@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     gap: 20
   }, 
   iconButton: {
-    color: "ffffff",
+    color: "#ffffff",
     fontSize: 20
   }
 })
