@@ -11,6 +11,7 @@ import styles from './style';
 export default function Products({ navigation }) {
   const { products, setProducts } = useContext(ProductContext);
   const { shopCart, setShopCart } = useContext(ProductContext);
+  const { setTotalShopCart } = useContext(ProductContext);
 
   const addToCart = (item) => {
     const newShopCart = [...shopCart];
@@ -29,6 +30,8 @@ export default function Products({ navigation }) {
 
   useEffect(() => {
     console.log(shopCart);
+    const newTotal = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
+    setTotalShopCart(newTotal);
   }, [shopCart]);
 
   useEffect(() => {

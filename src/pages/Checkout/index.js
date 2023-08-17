@@ -21,7 +21,8 @@ export default function Checkout({ navigation }) {
   const [isLoading, setLoading] = useState(false);
   const [paypalUrl, setPaypalUrl] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const { shopCart } = useContext(ProductContext);
+  const { shopCart, setShopCart } = useContext(ProductContext);
+  const { totalShopCart, setTotalShopCart } = useContext(ProductContext);
 
   useEffect(() => {
     const items = shopCart.map((item) => ({
@@ -34,8 +35,8 @@ export default function Checkout({ navigation }) {
       },
     }));
 
-    const value = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
-    console.log(value);
+    // const value = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
+    // console.log(value);
     const order = {
       intent: 'CAPTURE',
       purchase_units: [
@@ -43,11 +44,11 @@ export default function Checkout({ navigation }) {
           items,
           amount: {
             currency_code: 'BRL',
-            value: String(value),
+            value: String(totalShopCart),
             breakdown: {
               item_total: {
                 currency_code: 'BRL',
-                value: String(value),
+                value: String(totalShopCart),
               },
             },
           },
@@ -101,6 +102,8 @@ export default function Checkout({ navigation }) {
       console.log('capturePayment res++++', res);
       alert('Payment sucessfull...!!!');
       clearPaypalState();
+      setShopCart([]);
+      setTotalShopCart(0);
       navigation.navigate('Products');
     } catch (error) {
       console.log('error raised in payment capture', error);

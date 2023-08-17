@@ -8,17 +8,27 @@ import styles from './style';
 
 export default function ShoppingCart({ navigation }) {
   const { shopCart, setShopCart } = useContext(ProductContext);
+  const { totalShopCart } = useContext(ProductContext);
 
-  const addToCart = (item) => {
+  const addOneToCart = (item) => {
     const newShopCart = [...shopCart];
 
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
-    const filteredCart = shopCart.find((nItem) => nItem.uid === item.uid);
 
-    if (uidIndex !== -1) {
-      newShopCart.splice(uidIndex, 1, { ...item, quantity: filteredCart.quantity + 1 });
+    newShopCart.splice(uidIndex, 1, { ...item, quantity: item.quantity + 1 });
+
+    setShopCart(newShopCart);
+  };
+
+  const minusOneToCart = (item) => {
+    const newShopCart = [...shopCart];
+
+    const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
+
+    if (item.quantity > 1) {
+      newShopCart.splice(uidIndex, 1, { ...item, quantity: item.quantity - 1 });
     } else {
-      newShopCart.push({ ...item, quantity: 1 });
+      newShopCart.splice(uidIndex, 1);
     }
 
     setShopCart(newShopCart);
@@ -37,7 +47,7 @@ export default function ShoppingCart({ navigation }) {
           onPress={() => navigation.navigate('Products')}
         >
           <Text style={styles.iconButton}>
-            PRODUCTS
+            Home
           </Text>
         </TouchableOpacity>
         <FlatList
@@ -47,12 +57,18 @@ export default function ShoppingCart({ navigation }) {
             <View style={styles.viewProducts}>
               <TouchableOpacity
                 style={styles.addToCart}
-                onPress={() => addToCart(item)}
               >
                 <FontAwesome
-                  name="star"
+                  name="plus"
                   size={23}
                   color="#F92E6A"
+                  onPress={() => addOneToCart(item)}
+                />
+                <FontAwesome
+                  name="minus"
+                  size={23}
+                  color="#F92E6A"
+                  onPress={() => minusOneToCart(item)}
                 />
                 <Text
                   style={styles.nameText}
@@ -96,6 +112,10 @@ export default function ShoppingCart({ navigation }) {
             </View>
           )}
         />
+        <Text>
+          Total purchase amount: R$
+          {totalShopCart}
+        </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('Checkout')}
         >
@@ -114,7 +134,7 @@ export default function ShoppingCart({ navigation }) {
         onPress={() => navigation.navigate('Products')}
       >
         <Text style={styles.iconButton}>
-          PRODUCTS
+          Home
         </Text>
       </TouchableOpacity>
       <Text>
