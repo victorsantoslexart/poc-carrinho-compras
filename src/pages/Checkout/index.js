@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 // import liraries
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Modal, SafeAreaView, Text, TouchableOpacity, View,
 } from 'react-native';
@@ -12,46 +12,54 @@ import queryString from 'query-string';
 import WebView from 'react-native-webview';
 import paypalApi from '../../apis/paypalApi';
 import ButtonComp from '../../components/ButtonComp';
+import ProductContext from '../../context/ProductContext';
 import styles from './style';
 
 // create a component
 export default function Checkout({ navigation }) {
+  const [orderDetail, setOrderDetail] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [paypalUrl, setPaypalUrl] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const { shopCart } = useContext(ProductContext);
 
-  const orderDetail = {
-    intent: 'CAPTURE',
-    purchase_units: [
-      {
-        items: [
-          {
-            name: 'T-Shirt',
-            description: 'Green XL',
-            quantity: '1',
-            unit_amount: {
-              currency_code: 'BRL',
-              value: '200.00',
-            },
-          },
-        ],
-        amount: {
-          currency_code: 'BRL',
-          value: '200.00',
-          breakdown: {
-            item_total: {
-              currency_code: 'BRL',
-              value: '200.00',
+  useEffect(() => {
+    const items = shopCart.map((item) => ({
+      name: item.name,
+      description: item.name,
+      quantity: String(item.quantity),
+      unit_amount: {
+        currency_code: item.currency,
+        value: item.price,
+      },
+    }));
+
+    const value = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
+    console.log(value);
+    const order = {
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          items,
+          amount: {
+            currency_code: 'BRL',
+            value: String(value),
+            breakdown: {
+              item_total: {
+                currency_code: 'BRL',
+                value: String(value),
+              },
             },
           },
         },
+      ],
+      application_context: {
+        return_url: 'https://example.com/return',
+        cancel_url: 'https://example.com/cancel',
       },
-    ],
-    application_context: {
-      return_url: 'https://example.com/return',
-      cancel_url: 'https://example.com/cancel',
-    },
-  };
+    };
+    setOrderDetail(order);
+  }, []);
 
   const onPressPaypal = async () => {
     setLoading(true);
