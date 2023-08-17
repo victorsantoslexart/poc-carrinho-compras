@@ -37,6 +37,10 @@
   },
   "private": true,
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-native": "^4.0.0"
   }
 }
