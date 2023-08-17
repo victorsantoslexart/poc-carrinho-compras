@@ -42,7 +42,7 @@ export default function ShoppingCart({ navigation }) {
 
   if (shopCart.length > 0) {
     return (
-      <View style={styles.shopCart}>
+      <View style={styles.products}>
         <TouchableOpacity
           onPress={() => navigation.navigate('Products')}
         >
@@ -58,49 +58,48 @@ export default function ShoppingCart({ navigation }) {
               <TouchableOpacity
                 style={styles.addToCart}
               >
-                <FontAwesome
-                  name="plus"
-                  size={23}
-                  color="#F92E6A"
-                  onPress={() => addOneToCart(item)}
-                />
-                <FontAwesome
-                  name="minus"
-                  size={23}
-                  color="#F92E6A"
-                  onPress={() => minusOneToCart(item)}
-                />
                 <Text
-                  style={styles.nameText}
+                  style={{ ...styles.text, ...styles.nameText }}
                 >
                   {'Name: '}
                   {item.name}
                 </Text>
                 <Text
-                  style={styles.categoryText}
+                  style={styles.text}
                 >
                   {'Category: '}
                   {item.category}
                 </Text>
                 <View>
                   <Text
-                    style={styles.priceText}
+                    style={styles.text}
                   >
                     {'Price: '}
                     {item.price}
-                  </Text>
-                  <Text
-                    style={styles.currencyText}
-                  >
-                    {'Currency: '}
+                    {' '}
                     {item.currency}
                   </Text>
                   <Text
-                    style={styles.quantityText}
+                    style={styles.text}
                   >
                     {'Quantity: '}
                     {item.quantity}
                   </Text>
+                </View>
+                <View style={styles.plusOrMinus}>
+                  <FontAwesome
+                    name="plus"
+                    size={23}
+                    color="#F92E6A"
+                    onPress={() => addOneToCart(item)}
+                  />
+                  <Text style={{ color: '#F92E6A' }}>{' / '}</Text>
+                  <FontAwesome
+                    name="minus"
+                    size={23}
+                    color="#F92E6A"
+                    onPress={() => minusOneToCart(item)}
+                  />
                 </View>
               </TouchableOpacity>
               <FontAwesome
@@ -132,7 +131,7 @@ export default function ShoppingCart({ navigation }) {
     );
   }
   return (
-    <View style={styles.shopCart}>
+    <View style={styles.products}>
       <TouchableOpacity
         onPress={() => navigation.navigate('Products')}
       >
