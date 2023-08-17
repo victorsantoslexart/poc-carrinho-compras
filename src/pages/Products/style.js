@@ -1,13 +1,36 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  Products: {
+  products: {
     flex: 1,
-    backgroundColor: 'green',
-    gap: 20,
+    backgroundColor: '#DAC2FF',
+  },
+  flatlistProducts: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 12,
+    marginVertical: 12,
+    gap: 15,
+  },
+  viewProducts: {
+    width: 110,
+    height: 110,
+  },
+  addToCart: {
+    alignItems: 'center',
   },
   iconButton: {
-    color: '#ffffff',
+    color: '#F92E6A',
+    fontSize: 20,
+    margin: 6,
+  },
+  text: {
+    color: '#FFFFFF',
+  },
+  nameText: {
+    fontWeight: 'bold',
     fontSize: 20,
   },
 });

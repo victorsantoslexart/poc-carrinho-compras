@@ -7,7 +7,6 @@ import {
   Modal, SafeAreaView, Text, TouchableOpacity, View,
 } from 'react-native';
 
-// import { CardField } from '@stripe/stripe-react-native';
 import queryString from 'query-string';
 import WebView from 'react-native-webview';
 import paypalApi from '../../apis/paypalApi';
@@ -35,8 +34,6 @@ export default function Checkout({ navigation }) {
       },
     }));
 
-    // const value = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
-    // console.log(value);
     const order = {
       intent: 'CAPTURE',
       purchase_units: [
@@ -117,6 +114,13 @@ export default function Checkout({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Shopping Cart')}
+      >
+        <Text style={styles.iconButton}>
+          Shopping Cart
+        </Text>
+      </TouchableOpacity>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ padding: 16 }}>
           <ButtonComp

@@ -52,10 +52,11 @@ export default function Products({ navigation }) {
   }, []);
 
   return (
-    <View style={styles.Products}>
+    <View style={styles.products}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={products}
+        contentContainerStyle={styles.flatlistProducts}
         renderItem={({ item }) => (
           <View style={styles.viewProducts}>
             <TouchableOpacity
@@ -65,27 +66,24 @@ export default function Products({ navigation }) {
               <FontAwesome
                 name="star"
                 size={23}
-                color="#F92E6A"
+                color="#F70632"
               />
               <Text
-                style={styles.nameText}
+                style={{ ...styles.text, ...styles.nameText }}
               >
                 {item.name}
               </Text>
               <Text
-                style={styles.categoryText}
+                style={styles.text}
               >
                 {item.category}
               </Text>
               <View>
                 <Text
-                  style={styles.priceText}
+                  style={styles.text}
                 >
                   {item.price}
-                </Text>
-                <Text
-                  style={styles.currencyText}
-                >
+                  {' '}
                   {item.currency}
                 </Text>
               </View>
@@ -102,6 +100,7 @@ export default function Products({ navigation }) {
             size={23}
             color="#F92E6A"
           />
+          {' Shopping Cart'}
         </Text>
       </TouchableOpacity>
     </View>

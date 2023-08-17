@@ -112,18 +112,21 @@ export default function ShoppingCart({ navigation }) {
             </View>
           )}
         />
-        <Text>
+        <Text style={{ color: '#F92E6A' }}>
           Total purchase amount: R$
           {totalShopCart}
         </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('Checkout')}
         >
-          <FontAwesome
-            name="paypal"
-            size={23}
-            color="#F92E6A"
-          />
+          <Text style={styles.iconButton}>
+            <FontAwesome
+              name="paypal"
+              size={23}
+              color="#F92E6A"
+            />
+            {' Pay with Paypal'}
+          </Text>
         </TouchableOpacity>
       </View>
     );

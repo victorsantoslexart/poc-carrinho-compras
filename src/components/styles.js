@@ -1,16 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-      height: 42,
-      borderRadius: 8,
-      alignItems: 'center',
-      justifyContent: 'center'
+    height: 42,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   textStyle: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      color: 'white'
-  }
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'white',
+  },
 });
+
+export default styles;

@@ -1,6 +1,6 @@
 // import liraries
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 
 function ButtonComp({
   text = 'DONE',

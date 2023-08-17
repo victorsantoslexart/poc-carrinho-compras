@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   shopCart: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     gap: 20,
   },
   iconButton: {
-    color: '#ffffff',
+    color: '#F92E6A',
     fontSize: 20,
   },
 });
