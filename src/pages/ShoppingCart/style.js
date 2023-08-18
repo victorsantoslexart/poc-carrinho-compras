@@ -6,16 +6,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#DAC2FF',
   },
   flatlistProducts: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     marginHorizontal: 12,
-    marginVertical: 12,
     gap: 15,
   },
   viewProducts: {
-    borderRadius: 2,
+    borderRadius: 10,
     borderColor: '#F7C4FE',
     borderWidth: 2,
   },
@@ -26,6 +21,12 @@ const styles = StyleSheet.create({
     color: '#F92E6A',
     fontSize: 20,
     margin: 6,
+  },
+  gobackButton: {
+    color: '#F92E6A',
+    fontSize: 20,
+    margin: 6,
+    fontWeight: '500',
   },
   text: {
     color: '#FFFFFF',

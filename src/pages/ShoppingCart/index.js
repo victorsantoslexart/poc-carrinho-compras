@@ -46,13 +46,21 @@ export default function ShoppingCart({ navigation }) {
         <TouchableOpacity
           onPress={() => navigation.navigate('Products')}
         >
-          <Text style={styles.iconButton}>
-            Home
+          <Text
+            style={styles.gobackButton}
+          >
+            <FontAwesome
+              name="home"
+              size={23}
+              color="#F92E6A"
+            />
+            {' Home'}
           </Text>
         </TouchableOpacity>
         <FlatList
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator
           data={shopCart}
+          contentContainerStyle={styles.flatlistProducts}
           renderItem={({ item }) => (
             <View style={styles.viewProducts}>
               <TouchableOpacity
@@ -89,14 +97,14 @@ export default function ShoppingCart({ navigation }) {
                 <View style={styles.plusOrMinus}>
                   <FontAwesome
                     name="plus"
-                    size={23}
+                    size={27}
                     color="#F92E6A"
                     onPress={() => addOneToCart(item)}
                   />
                   <Text style={{ color: '#F92E6A' }}>{' / '}</Text>
                   <FontAwesome
                     name="minus"
-                    size={23}
+                    size={27}
                     color="#F92E6A"
                     onPress={() => minusOneToCart(item)}
                   />
@@ -111,7 +119,7 @@ export default function ShoppingCart({ navigation }) {
             </View>
           )}
         />
-        <Text style={{ color: '#F92E6A' }}>
+        <Text style={{ color: '#F92E6A', margin: 6 }}>
           Total purchase amount: R$
           {totalShopCart}
         </Text>
@@ -134,12 +142,15 @@ export default function ShoppingCart({ navigation }) {
     <View style={styles.products}>
       <TouchableOpacity
         onPress={() => navigation.navigate('Products')}
+        style={styles.gobackButton}
       >
-        <Text style={styles.iconButton}>
-          Home
-        </Text>
+        <FontAwesome
+          name="home"
+          size={23}
+          color="#F92E6A"
+        />
       </TouchableOpacity>
-      <Text>
+      <Text style={{ ...styles.iconButton, fontSize: 18 }}>
         The shopping cart is empty!
       </Text>
     </View>
