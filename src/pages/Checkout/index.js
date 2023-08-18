@@ -7,6 +7,7 @@ import {
   Modal, SafeAreaView, Text, TouchableOpacity, View,
 } from 'react-native';
 
+import { FontAwesome } from '@expo/vector-icons';
 import queryString from 'query-string';
 import WebView from 'react-native-webview';
 import paypalApi from '../../apis/paypalApi';
@@ -118,7 +119,13 @@ export default function Checkout({ navigation }) {
         onPress={() => navigation.navigate('Shopping Cart')}
       >
         <Text style={styles.iconButton}>
-          Shopping Cart
+          <FontAwesome
+            name="shopping-cart"
+            size={23}
+            color="#F92E6A"
+            onPress={() => addOneToCart(item)}
+          />
+          {' Shopping Cart'}
         </Text>
       </TouchableOpacity>
       <SafeAreaView style={{ flex: 1 }}>
