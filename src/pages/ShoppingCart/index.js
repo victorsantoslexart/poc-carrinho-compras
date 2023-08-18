@@ -1,15 +1,23 @@
+// Importa o ícone FontAwesome da biblioteca Expo
 import { FontAwesome } from '@expo/vector-icons';
+// Importa o componente React e o contexto do produto
 import React, { useContext } from 'react';
+// Importa componentes do React Native
 import {
   FlatList, Text, TouchableOpacity, View,
 } from 'react-native';
+// Importa o contexto do produto
 import ProductContext from '../../context/ProductContext';
+// Importa os estilos do componente
 import styles from './style';
 
+// Componente ShoppingCart: Página do carrinho de compras
 export default function ShoppingCart({ navigation }) {
+  // Obtém os estados e funções do contexto do produto
   const { shopCart, setShopCart } = useContext(ProductContext);
   const { totalShopCart } = useContext(ProductContext);
 
+  // Função para adicionar uma unidade a um item no carrinho
   const addOneToCart = (item) => {
     const newShopCart = [...shopCart];
 
@@ -20,6 +28,7 @@ export default function ShoppingCart({ navigation }) {
     setShopCart(newShopCart);
   };
 
+  // Função para remover uma unidade de um item no carrinho
   const minusOneToCart = (item) => {
     const newShopCart = [...shopCart];
 
@@ -34,15 +43,18 @@ export default function ShoppingCart({ navigation }) {
     setShopCart(newShopCart);
   };
 
+  // Função para remover um item do carrinho
   const removeShopCart = (item) => {
     const newShopCart = shopCart.filter((newItem) => newItem.uid !== item.uid);
 
     setShopCart(newShopCart);
   };
 
+  // Renderização do componente
   if (shopCart.length > 0) {
     return (
       <View style={styles.products}>
+        {/* Botão para voltar à página de produtos */}
         <TouchableOpacity
           onPress={() => navigation.navigate('Products')}
         >
@@ -57,6 +69,7 @@ export default function ShoppingCart({ navigation }) {
             {' Home'}
           </Text>
         </TouchableOpacity>
+        {/* Lista de itens no carrinho */}
         <FlatList
           showsVerticalScrollIndicator
           data={shopCart}
@@ -94,6 +107,7 @@ export default function ShoppingCart({ navigation }) {
                     {item.quantity}
                   </Text>
                 </View>
+                {/* Botões para aumentar e diminuir a quantidade */}
                 <View style={styles.plusOrMinus}>
                   <FontAwesome
                     name="plus"
@@ -110,6 +124,7 @@ export default function ShoppingCart({ navigation }) {
                   />
                 </View>
               </TouchableOpacity>
+              {/* Botão para remover o item do carrinho */}
               <FontAwesome
                 name="remove"
                 size={23}
@@ -119,10 +134,12 @@ export default function ShoppingCart({ navigation }) {
             </View>
           )}
         />
+        {/* Exibe o total da compra */}
         <Text style={{ color: '#F92E6A', margin: 6 }}>
           Total purchase amount: R$
           {totalShopCart}
         </Text>
+        {/* Botão para pagar com o PayPal */}
         <TouchableOpacity
           onPress={() => navigation.navigate('Checkout')}
         >
@@ -132,14 +149,16 @@ export default function ShoppingCart({ navigation }) {
               size={23}
               color="#F92E6A"
             />
-            {' Pay with Paypal'}
+            {' Pay with PayPal'}
           </Text>
         </TouchableOpacity>
       </View>
     );
   }
+  // Caso o carrinho esteja vazio
   return (
     <View style={styles.products}>
+      {/* Botão para voltar à página de produtos */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Products')}
       >
@@ -154,6 +173,7 @@ export default function ShoppingCart({ navigation }) {
           {' Home'}
         </Text>
       </TouchableOpacity>
+      {/* Mensagem de carrinho vazio */}
       <Text style={{ ...styles.iconButton, fontSize: 18 }}>
         The shopping cart is empty!
       </Text>

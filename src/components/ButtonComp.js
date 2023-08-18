@@ -1,4 +1,3 @@
-// import liraries
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
@@ -26,5 +25,4 @@ function ButtonComp({
   );
 }
 
-// make this component available to the app
 export default ButtonComp;

@@ -1,24 +1,34 @@
+// Importa o ícone FontAwesome da biblioteca Expo
 import { FontAwesome } from '@expo/vector-icons';
+// Importa funções para interagir com a coleção Firestore e outros componentes do React Native
 import { collection, getDocs } from 'firebase/firestore/lite';
 import React, { useContext, useEffect } from 'react';
 import {
   FlatList, Text, TouchableOpacity, View,
 } from 'react-native';
+// Importa a configuração do Firebase
 import database from '../../config/firebaseconfig';
+// Importa o contexto do produto
 import ProductContext from '../../context/ProductContext';
+// Importa os estilos do componente
 import styles from './style';
 
+// Componente Products: Página de exibição de produtos
 export default function Products({ navigation }) {
+  // Obtém os estados e funções do contexto do produto
   const { products, setProducts } = useContext(ProductContext);
   const { shopCart, setShopCart } = useContext(ProductContext);
   const { setTotalShopCart } = useContext(ProductContext);
 
+  // Função para adicionar um item ao carrinho de compras
   const addToCart = (item) => {
     const newShopCart = [...shopCart];
 
+    // Verifica se o item já está no carrinho
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
     const filteredCart = shopCart.find((nItem) => nItem.uid === item.uid);
 
+    // Atualiza o carrinho com a quantidade do item
     if (uidIndex !== -1) {
       newShopCart.splice(uidIndex, 1, { ...item, quantity: filteredCart.quantity + 1 });
     } else {
@@ -28,16 +38,17 @@ export default function Products({ navigation }) {
     setShopCart(newShopCart);
   };
 
+  // Atualiza o total do carrinho sempre que o carrinho muda
   useEffect(() => {
-    console.log(shopCart);
     const newTotal = shopCart.reduce((a, b) => a + (b.price * b.quantity), 0);
     setTotalShopCart(newTotal);
   }, [shopCart]);
 
+  // Busca os produtos no Firestore e atualiza o estado
   useEffect(() => {
     async function fetchData() {
-      const prodCollec = collection(database, 'products');
-      const prodSnapshot = await getDocs(prodCollec);
+      const prodCollec = collection(database, 'products'); // Referência à coleção 'products'
+      const prodSnapshot = await getDocs(prodCollec); // Obtém os documentos da coleção
 
       const p = [];
       prodSnapshot.forEach((doc) => {
@@ -46,19 +57,22 @@ export default function Products({ navigation }) {
           ...doc.data(),
         });
       });
-      setProducts(p);
+      setProducts(p); // Atualiza o estado dos produtos
     }
     fetchData();
   }, []);
 
+  // Renderização do componente
   return (
     <View style={styles.products}>
+      {/* Lista de produtos */}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={products}
         contentContainerStyle={styles.flatlistProducts}
         renderItem={({ item }) => (
           <View style={styles.viewProducts}>
+            {/* Botão para adicionar ao carrinho */}
             <TouchableOpacity
               style={styles.addToCart}
               onPress={() => addToCart(item)}
@@ -91,6 +105,7 @@ export default function Products({ navigation }) {
           </View>
         )}
       />
+      {/* Botão para navegar ao carrinho de compras */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Shopping Cart')}
       >

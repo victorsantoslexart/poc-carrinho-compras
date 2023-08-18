@@ -1,22 +1,23 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
-// import liraries
+
+// Importa os módulos e componentes necessários do React Native e de outras bibliotecas
+import { FontAwesome } from '@expo/vector-icons'; // Importa o ícone FontAwesome
+import queryString from 'query-string'; // Importa a biblioteca para manipulação de URLs com query strings
 import { useContext, useEffect, useState } from 'react';
 import {
   Modal, SafeAreaView, Text, TouchableOpacity, View,
 } from 'react-native';
+import WebView from 'react-native-webview'; // Importa o componente WebView
+import paypalApi from '../../apis/paypalApi'; // Importa o módulo com as funções de API para o PayPal
+import ButtonComp from '../../components/ButtonComp'; // Importa o componente personalizado ButtonComp
+import ProductContext from '../../context/ProductContext'; // Importa o contexto do produto
+import styles from './style'; // Importa os estilos do componente
 
-import { FontAwesome } from '@expo/vector-icons';
-import queryString from 'query-string';
-import WebView from 'react-native-webview';
-import paypalApi from '../../apis/paypalApi';
-import ButtonComp from '../../components/ButtonComp';
-import ProductContext from '../../context/ProductContext';
-import styles from './style';
-
-// create a component
+// Componente Checkout: Página de finalização de pagamento
 export default function Checkout({ navigation }) {
+  // Estados do componente
   const [orderDetail, setOrderDetail] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [paypalUrl, setPaypalUrl] = useState(null);
@@ -25,6 +26,7 @@ export default function Checkout({ navigation }) {
   const { totalShopCart, setTotalShopCart } = useContext(ProductContext);
 
   useEffect(() => {
+    // Cria os detalhes do pedido com base nos itens no carrinho
     const items = shopCart.map((item) => ({
       name: item.name,
       description: item.name,
@@ -35,6 +37,7 @@ export default function Checkout({ navigation }) {
       },
     }));
 
+    // Cria o objeto de pedido
     const order = {
       intent: 'CAPTURE',
       purchase_units: [
@@ -60,17 +63,17 @@ export default function Checkout({ navigation }) {
     setOrderDetail(order);
   }, []);
 
+  // Função chamada ao pressionar o botão "PayPal"
   const onPressPaypal = async () => {
     setLoading(true);
     try {
-      const token = await paypalApi.generateToken();
-      const res = await paypalApi.createOrder(orderDetail, token);
+      const token = await paypalApi.generateToken(); // Gera um token de autenticação
+      const res = await paypalApi.createOrder(orderDetail, token); // Cria um pedido no PayPal
       setAccessToken(token);
-      console.log('res++++++', res);
       setLoading(false);
       if (res.links) {
         const findUrl = res.links.find((data) => data.rel === 'approve');
-        setPaypalUrl(findUrl.href);
+        setPaypalUrl(findUrl.href); // Define a URL de pagamento do PayPal
       }
     } catch (error) {
       console.log('error', error);
@@ -78,43 +81,46 @@ export default function Checkout({ navigation }) {
     }
   };
 
+  // Função chamada quando a URL do WebView muda
   const onUrlChange = (webviewState) => {
-    console.log('webviewStatewebviewState', webviewState);
     if (webviewState.url.includes('https://example.com/cancel')) {
-      clearPaypalState();
+      clearPaypalState(); // Limpa os estados relacionados ao PayPal
       return;
     }
     if (webviewState.url.includes('https://example.com/return')) {
       const urlValues = queryString.parseUrl(webviewState.url);
-      console.log('my urls value', urlValues);
       const { token } = urlValues.query;
       if (token) {
-        paymentSucess(token);
+        paymentSucess(token); // Realiza ação de sucesso após o pagamento
       }
     }
   };
 
+  // Função chamada após o pagamento ser bem-sucedido
   const paymentSucess = async (id) => {
     try {
-      const res = paypalApi.capturePayment(id, accessToken);
+      const res = paypalApi.capturePayment(id, accessToken); // Captura o pagamento no PayPal
       console.log('capturePayment res++++', res);
-      alert('Payment sucessfull...!!!');
+      alert('Payment successful...!!!');
       clearPaypalState();
-      setShopCart([]);
-      setTotalShopCart(0);
-      navigation.navigate('Products');
+      setShopCart([]); // Limpa o carrinho de compras
+      setTotalShopCart(0); // Zera o total do carrinho
+      navigation.navigate('Products'); // Navega de volta para a lista de produtos
     } catch (error) {
       console.log('error raised in payment capture', error);
     }
   };
 
+  // Função para limpar os estados relacionados ao PayPal
   const clearPaypalState = () => {
     setPaypalUrl(null);
     setAccessToken(null);
   };
 
+  // Renderização do componente
   return (
     <View style={styles.container}>
+      {/* Botão para navegar ao carrinho de compras */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Shopping Cart')}
       >
@@ -130,6 +136,7 @@ export default function Checkout({ navigation }) {
       </TouchableOpacity>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ padding: 16 }}>
+          {/* Botão de pagamento PayPal */}
           <ButtonComp
             onPress={onPressPaypal}
             disabled={false}
@@ -137,6 +144,7 @@ export default function Checkout({ navigation }) {
             text="PayPal"
             isLoading={isLoading}
           />
+          {/* Modal para exibir o WebView do PayPal */}
           <Modal
             visible={!!paypalUrl}
           >

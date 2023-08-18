@@ -4,6 +4,10 @@ import React, { useMemo, useState } from 'react';
 import ProductContext from './ProductContext';
 
 export default function ProductProvider({ children }) {
+  // 3 estados que vão ser usados em varias partes da aplicação
+  // products guarda a lista de produtos que vem do firebase
+  // shopCart guarda a lista de compras
+  // totalShopCart guarda o valor total das compras
   const [products, setProducts] = useState([]);
   const [shopCart, setShopCart] = useState([]);
   const [totalShopCart, setTotalShopCart] = useState(0);
