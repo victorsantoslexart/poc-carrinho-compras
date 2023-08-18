@@ -3,17 +3,17 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   products: {
     flex: 1,
-    backgroundColor: '#DAC2FF',
+    backgroundColor: '#14161A',
   },
   flatlistProducts: {
     marginHorizontal: 12,
     gap: 15,
   },
   viewProducts: {
-    // width: 110,
+    justifyContent: 'center',
     marginTop: 15,
     borderRadius: 10,
-    borderColor: '#F7C4FE',
+    borderColor: '#F92E6A',
     borderWidth: 2,
     height: 110,
   },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     margin: 6,
   },
   text: {
-    color: '#FFFFFF',
+    color: 'white',
   },
   nameText: {
     fontWeight: 'bold',

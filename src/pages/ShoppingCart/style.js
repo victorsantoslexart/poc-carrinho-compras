@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   products: {
     flex: 1,
-    backgroundColor: '#DAC2FF',
+    backgroundColor: '#14161A',
   },
   flatlistProducts: {
     marginHorizontal: 12,
@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   },
   viewProducts: {
     borderRadius: 10,
-    borderColor: '#F7C4FE',
+    justifyContent: 'center',
+    borderColor: '#F92E6A',
     borderWidth: 2,
   },
   addToCart: {

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#DAC2FF',
+    backgroundColor: '#14161A',
     flex: 1,
   },
   iconButton: {
