@@ -6,16 +6,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#DAC2FF',
   },
   flatlistProducts: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     marginHorizontal: 12,
-    marginVertical: 12,
     gap: 15,
   },
   viewProducts: {
-    width: 110,
+    // width: 110,
+    marginTop: 15,
+    borderRadius: 10,
+    borderColor: '#F7C4FE',
+    borderWidth: 2,
     height: 110,
   },
   addToCart: {

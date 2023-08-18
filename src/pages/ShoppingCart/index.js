@@ -142,13 +142,17 @@ export default function ShoppingCart({ navigation }) {
     <View style={styles.products}>
       <TouchableOpacity
         onPress={() => navigation.navigate('Products')}
-        style={styles.gobackButton}
       >
-        <FontAwesome
-          name="home"
-          size={23}
-          color="#F92E6A"
-        />
+        <Text
+          style={styles.gobackButton}
+        >
+          <FontAwesome
+            name="home"
+            size={23}
+            color="#F92E6A"
+          />
+          {' Home'}
+        </Text>
       </TouchableOpacity>
       <Text style={{ ...styles.iconButton, fontSize: 18 }}>
         The shopping cart is empty!

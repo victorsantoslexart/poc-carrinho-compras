@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     color: '#F92E6A',
     fontSize: 20,
     margin: 6,
-    fontWeight: '500',
+    // fontWeight: '500',
   },
   text: {
     color: '#FFFFFF',
