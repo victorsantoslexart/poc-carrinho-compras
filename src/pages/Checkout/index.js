@@ -23,6 +23,7 @@ export default function Checkout({ navigation }) {
   const [paypalUrl, setPaypalUrl] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const { shopCart, setShopCart } = useContext(ProductContext);
+  const { products, setProducts } = useContext(ProductContext);
   const { totalShopCart, setTotalShopCart } = useContext(ProductContext);
 
   useEffect(() => {
@@ -105,6 +106,7 @@ export default function Checkout({ navigation }) {
       clearPaypalState();
       setShopCart([]); // Limpa o carrinho de compras
       setTotalShopCart(0); // Zera o total do carrinho
+      setProducts(products.map((item) => ({ ...item, quantity: 0 })));
       navigation.navigate('Products'); // Navega de volta para a lista de produtos
     } catch (error) {
       console.log('error raised in payment capture', error);

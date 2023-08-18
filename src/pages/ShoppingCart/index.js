@@ -14,6 +14,7 @@ import styles from './style';
 // Componente ShoppingCart: Página do carrinho de compras
 export default function ShoppingCart({ navigation }) {
   // Obtém os estados e funções do contexto do produto
+  const { products, setProducts } = useContext(ProductContext);
   const { shopCart, setShopCart } = useContext(ProductContext);
   const { totalShopCart } = useContext(ProductContext);
 
@@ -22,9 +23,12 @@ export default function ShoppingCart({ navigation }) {
     const newShopCart = [...shopCart];
 
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
+    const newProd = products.map((pItem) => (pItem.uid === item.uid
+      ? ({ ...pItem, quantity: pItem.quantity + 1 }) : pItem));
 
     newShopCart.splice(uidIndex, 1, { ...item, quantity: item.quantity + 1 });
 
+    setProducts(newProd);
     setShopCart(newShopCart);
   };
 
@@ -33,20 +37,29 @@ export default function ShoppingCart({ navigation }) {
     const newShopCart = [...shopCart];
 
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
+    let newProd;
 
     if (item.quantity > 1) {
       newShopCart.splice(uidIndex, 1, { ...item, quantity: item.quantity - 1 });
+      newProd = products.map((pItem) => (pItem.uid === item.uid
+        ? ({ ...pItem, quantity: pItem.quantity - 1 }) : pItem));
     } else {
       newShopCart.splice(uidIndex, 1);
+      newProd = products.map((pItem) => (pItem.uid === item.uid
+        ? ({ ...pItem, quantity: 0 }) : pItem));
     }
 
+    setProducts(newProd);
     setShopCart(newShopCart);
   };
 
   // Função para remover um item do carrinho
   const removeShopCart = (item) => {
     const newShopCart = shopCart.filter((newItem) => newItem.uid !== item.uid);
+    const newProd = products.map((pItem) => (pItem.uid === item.uid
+      ? ({ ...pItem, quantity: 0 }) : pItem));
 
+    setProducts(newProd);
     setShopCart(newShopCart);
   };
 
@@ -91,22 +104,20 @@ export default function ShoppingCart({ navigation }) {
                   {'Category: '}
                   {item.category}
                 </Text>
-                <View>
-                  <Text
-                    style={styles.text}
-                  >
-                    {'Price: '}
-                    {item.price}
-                    {' '}
-                    {item.currency}
-                  </Text>
-                  <Text
-                    style={styles.text}
-                  >
-                    {'Quantity: '}
-                    {item.quantity}
-                  </Text>
-                </View>
+                <Text
+                  style={styles.text}
+                >
+                  {'Price: '}
+                  {item.price}
+                  {' '}
+                  {item.currency}
+                </Text>
+                <Text
+                  style={styles.text}
+                >
+                  {'Quantity: '}
+                  {item.quantity}
+                </Text>
                 {/* Botões para aumentar e diminuir a quantidade */}
                 <View style={styles.plusOrMinus}>
                   <FontAwesome

@@ -24,6 +24,10 @@ export default function Products({ navigation }) {
   const addToCart = (item) => {
     const newShopCart = [...shopCart];
 
+    // Aumenta quantity de product
+    const newProd = products.map((pItem) => (pItem.uid === item.uid
+      ? ({ ...pItem, quantity: pItem.quantity + 1 }) : pItem));
+
     // Verifica se o item já está no carrinho
     const uidIndex = newShopCart.findIndex((shopItem) => shopItem.uid === item.uid);
     const filteredCart = shopCart.find((nItem) => nItem.uid === item.uid);
@@ -35,6 +39,7 @@ export default function Products({ navigation }) {
       newShopCart.push({ ...item, quantity: 1 });
     }
 
+    setProducts(newProd);
     setShopCart(newShopCart);
   };
 
@@ -55,11 +60,12 @@ export default function Products({ navigation }) {
         p.push({
           uid: doc.id,
           ...doc.data(),
+          quantity: 0,
         });
       });
       setProducts(p); // Atualiza o estado dos produtos
     }
-    fetchData();
+    if (products.length <= 0) fetchData();
   }, []);
 
   // Renderização do componente
@@ -85,22 +91,29 @@ export default function Products({ navigation }) {
               <Text
                 style={{ ...styles.text, ...styles.nameText }}
               >
+                {'Name: '}
                 {item.name}
               </Text>
               <Text
                 style={styles.text}
               >
+                {'Category: '}
                 {item.category}
               </Text>
-              <View>
-                <Text
-                  style={styles.text}
-                >
-                  {item.price}
-                  {' '}
-                  {item.currency}
-                </Text>
-              </View>
+              <Text
+                style={styles.text}
+              >
+                {'Price: '}
+                {item.price}
+                {' '}
+                {item.currency}
+              </Text>
+              <Text
+                style={styles.text}
+              >
+                {'Quantity: '}
+                {item.quantity}
+              </Text>
             </TouchableOpacity>
           </View>
         )}

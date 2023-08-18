@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#F92E6A',
     borderWidth: 2,
-    height: 110,
+    height: 130,
   },
   addToCart: {
     alignItems: 'center',
